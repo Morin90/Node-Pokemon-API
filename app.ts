@@ -8,7 +8,13 @@ import {pokemons} from "./mock-pokemon";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT|| 3000;
-const pokemon= [pokemons];
+
+
+//Ajout du MiddleWare, pour pouvoir tracer les requêtes qui sont faites par le client
+app.use((req: Request, res: Response, next: Function) =>{
+    console.log(`URL : ${req.url}`)
+    next()
+});
 
 //Point de terminaison test
 app.get("/", (request: Request, response: Response) => {

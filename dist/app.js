@@ -11,7 +11,13 @@ const mock_pokemon_1 = require("./mock-pokemon");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
-const pokemon = [mock_pokemon_1.pokemons];
+//Déclaration du MiddleWareLogger
+const logger = (req, res, next) => {
+    console.log(`URL : ${req.url}`);
+    next();
+};
+//Ajout du MiddleWare
+app.use(logger);
 //Point de terminaison test
 app.get("/", (request, response) => {
     //Message de bienvenue
