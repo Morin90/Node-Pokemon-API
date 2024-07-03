@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 
 //Point de terminaison permettant de récupérer un pokemon/id
 app.get("/api/pokemons/:id", (req, res) => {
-    // constante pour compter le nombre de pokemons
+    // constante pour récuperer le params Id
     const id = parseInt(req.params.id);
     // constante pour rechercher le bon id
     const pokemon = pokemons.find(pokemon => pokemon.id == id);
@@ -25,7 +25,15 @@ app.get("/api/pokemons/:id", (req, res) => {
 
 //Le nouveau point de terminaison affiche le nombre de pokemons se trouvant dans le Pokedex
 app.get(`/api/pokemons`, (req, res) => {
-    res.send(`Il y a ${pokemons.length} pokemons dans le Pokedex pour le moment.`);
+    // constante pour récuperer le params Id
+    const id = parseInt(req.params.id);
+    // constante pour récuperer la liste de Pokemons
+    const pokemon = pokemons;
+    // Ajout d'un message pour informer que la liste a bien été récuperée
+    const message = `La liste des pokemons a bien été récupérée.`;
+    res.json(success(message, pokemon));
 })
+
+
 
 app.listen(port, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${port}`))
