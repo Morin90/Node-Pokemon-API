@@ -9,10 +9,13 @@ app.get("/", (req, res) => {
 })
 
 app.get("/api/pokemons/:id", (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const pokemon = pokemons.find(pokemon => pokemon.id == id);
     res.send(`Vous avez demandé le pokemon ${pokemon.name}`);
 })
 
+app.get(`/api/pokemons`, (req, res) => {
+    res.send(`Il y a ${pokemons.length} pokemons dans le Pokedex pour le moment.`);
+})
 
 app.listen(port, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${port}`))
