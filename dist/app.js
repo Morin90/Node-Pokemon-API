@@ -7,17 +7,17 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const helper_1 = require("./helper");
 const mock_pokemon_1 = require("./mock-pokemon");
+const morgan_1 = __importDefault(require("morgan"));
 // Récuperer uniquement la fonction success du module Helper.js
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
-//Déclaration du MiddleWareLogger
-const logger = (req, res, next) => {
-    console.log(`URL : ${req.url}`);
-    next();
-};
-//Ajout du MiddleWare
-app.use(logger);
+//Ajout du MiddleWare, pour pouvoir tracer les requêtes qui sont faites par le client
+app.use((0, morgan_1.default)(`dev`));
+/*app.use((req: Request, res: Response, next: Function) =>{
+    console.log(`URL : ${req.url}`)
+    next()
+});*/
 //Point de terminaison test
 app.get("/", (request, response) => {
     //Message de bienvenue

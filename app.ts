@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import dotenv from "dotenv";
 import {success} from "./helper";
 import {pokemons} from "./mock-pokemon";
+import morgan from "morgan";
 // Récuperer uniquement la fonction success du module Helper.js
 
 
@@ -11,10 +12,11 @@ const PORT = process.env.PORT|| 3000;
 
 
 //Ajout du MiddleWare, pour pouvoir tracer les requêtes qui sont faites par le client
-app.use((req: Request, res: Response, next: Function) =>{
+app.use(morgan(`dev`));
+/*app.use((req: Request, res: Response, next: Function) =>{
     console.log(`URL : ${req.url}`)
     next()
-});
+});*/
 
 //Point de terminaison test
 app.get("/", (request: Request, response: Response) => {
