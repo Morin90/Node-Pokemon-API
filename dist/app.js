@@ -32,7 +32,7 @@ app.get("/", (request, response) => {
 //Point de terminaison permettant de récupérer un pokemon/id
 app.get("/api/pokemons/:id", (request, response) => {
     // constante pour récuperer le params Id
-    const id = parseInt(request.params.id, 10);
+    const id = parseInt(request.params.id);
     // constante pour rechercher le bon id
     const pokemon = pokemons.find((pokemon => pokemon.id == id));
     //constante pour le message
@@ -56,7 +56,7 @@ app.post(`/api/pokemons`, (request, response) => {
 });
 //Ajout d'un nouveau point de terminaison pour modifier un pokemon
 app.put(`/api/pokemons/:id`, (request, response) => {
-    const id = parseInt(request.params.id, 10);
+    const id = parseInt(request.params.id);
     const pokemonUpdated = Object.assign(Object.assign({}, request.body), { id: id });
     pokemons = pokemons.map(pokemon => {
         return pokemon.id === id ? pokemonUpdated : pokemon;
