@@ -64,4 +64,19 @@ app.put(`/api/pokemons/:id`, (request, response) => {
     const message = `Le pokemon ${pokemonUpdated.name} a bien été mis à jour.`;
     response.json((0, helper_1.success)(message, pokemonUpdated));
 });
+//Ajout d'un nouveau point de terminaison pour supprimer un pokemon
+app.delete(`/api/pokemons/:id`, (request, response) => {
+    const id = parseInt(request.params.id, 10);
+    const pokemonDeleted = pokemons.find(pokemon => pokemon.id === id);
+    pokemons.filter(pokemon => pokemon.id !== id);
+    if (pokemonDeleted) {
+        pokemons = pokemons.filter((pokemon) => pokemon.id !== id);
+        const message = `Le pokemon ${pokemonDeleted.name} a bien été supprimé.`;
+        response.json((0, helper_1.success)(message, pokemonDeleted));
+    }
+    else {
+        const message = `Aucun pokemon trouvé avec l'id ${id}.`;
+        response.status(404).json({ message });
+    }
+});
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));
