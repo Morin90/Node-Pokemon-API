@@ -74,7 +74,7 @@ app.put(`/api/pokemons/:id`, (request: Request, response: Response) => {
 
 //Ajout d'un nouveau point de terminaison pour supprimer un pokemon
 app.delete(`/api/pokemons/:id`, (request: Request, response: Response) => {
-    const id = parseInt(request.params.id, 10);
+    const id = parseInt(request.params.id);
     const pokemonDeleted = pokemons.find(pokemon => pokemon.id === id);
     pokemons.filter(pokemon => pokemon.id !== id);
     if (pokemonDeleted) {
