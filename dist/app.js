@@ -11,6 +11,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const serve_favicon_1 = __importDefault(require("serve-favicon"));
 const body_parser_1 = __importDefault(require("body-parser"));
 // Récuperer uniquement la fonction success du module Helper.js
+let pokemons = [...mock_pokemon_1.pokemons];
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -33,7 +34,7 @@ app.get("/api/pokemons/:id", (request, response) => {
     // constante pour récuperer le params Id
     const id = parseInt(request.params.id, 10);
     // constante pour rechercher le bon id
-    const pokemon = mock_pokemon_1.pokemons.find((pokemon => pokemon.id == id));
+    const pokemon = pokemons.find((pokemon => pokemon.id == id));
     //constante pour le message
     const message = `Un pokemon a bien été trouvé`;
     // Ajout d'un message pour informer que le pokemon a bien été trouvé
@@ -43,14 +44,24 @@ app.get("/api/pokemons/:id", (request, response) => {
 app.get(`/api/pokemons`, (request, response) => {
     // Ajout d'un message pour informer que la liste a bien été récuperée
     const message = `La liste des pokemons a bien été récupérée.`;
-    response.json((0, helper_1.success)(message, mock_pokemon_1.pokemons));
+    response.json((0, helper_1.success)(message, pokemons));
 });
 //point de terminaison pour ajouter un pokemon
 app.post(`/api/pokemons`, (request, response) => {
-    const id = (0, helper_1.getUniqueId)(mock_pokemon_1.pokemons);
+    const id = (0, helper_1.getUniqueId)(pokemons);
     const pokemonCreated = Object.assign(Object.assign({}, request.body), { id: id, created: new Date() });
-    mock_pokemon_1.pokemons.push(pokemonCreated);
+    pokemons.push(pokemonCreated);
     const message = `Le pokemon ${pokemonCreated.name} a bien été créé.`;
     response.json((0, helper_1.success)(message, pokemonCreated));
+});
+//Ajout d'un nouveau point de terminaison pour modifier un pokemon
+app.put(`/api/pokemons/:id`, (request, response) => {
+    const id = parseInt(request.params.id, 10);
+    const pokemonUpdated = Object.assign(Object.assign({}, request.body), { id: id });
+    pokemons = pokemons.map(pokemon => {
+        return pokemon.id === id ? pokemonUpdated : pokemon;
+    });
+    const message = `Le pokemon ${pokemonUpdated.name} a bien été mis à jour.`;
+    response.json((0, helper_1.success)(message, pokemonUpdated));
 });
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));

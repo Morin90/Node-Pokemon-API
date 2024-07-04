@@ -1,13 +1,13 @@
 import express, {Request, Response} from "express";
 import dotenv from "dotenv";
 import {success, getUniqueId} from "./helper";
-import {pokemons} from "./mock-pokemon";
+import {pokemons as importedPokemons} from "./mock-pokemon";
 import morgan from "morgan";
 import favicon from "serve-favicon";
 import bodyParser from "body-parser";
 // Récuperer uniquement la fonction success du module Helper.js
 
-
+let pokemons = [...importedPokemons];
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT|| 3000;
@@ -59,6 +59,19 @@ app.post(`/api/pokemons`, (request: Request, response: Response) => {
         response.json(success(message, pokemonCreated));
     
 })
+
+//Ajout d'un nouveau point de terminaison pour modifier un pokemon
+app.put(`/api/pokemons/:id`, (request: Request, response: Response) => {
+    const id = parseInt(request.params.id, 10);
+    const pokemonUpdated = {
+        ...request.body, id: id}
+        pokemons = pokemons.map(pokemon =>{
+            return pokemon.id === id ? pokemonUpdated : pokemon}
+        )
+        const message = `Le pokemon ${pokemonUpdated.name} a bien été mis à jour.`;
+        response.json(success(message, pokemonUpdated));
+})
+
 
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`))
 
