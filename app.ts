@@ -1,23 +1,37 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import {success, getUniqueId} from "./helper";
-import {pokemons as importedPokemons} from "./mock-pokemon";
+import { success, getUniqueId } from "./helper";
+import { pokemons as importedPokemons } from "./mock-pokemon";
 import morgan from "morgan";
 import favicon from "serve-favicon";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
+
 // Récuperer uniquement la fonction success du module Helper.js
 
 let pokemons = [...importedPokemons];
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT|| 3000;
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/pokemons";
 
+// Connect to MongoDB
+const connectDB = async () => {
+    try {
+        await mongoose.connect(MONGODB_URI);
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1);
+    }
+};
+export default connectDB;
 
 //Ajout du MiddleWare, pour pouvoir tracer les requêtes qui sont faites par le client
 app
-.use(favicon(`${__dirname}/public/favicon.ico`))
-.use(morgan(`dev`))
-.use(bodyParser.json())
+    .use(favicon(`${__dirname}/public/favicon.ico`))
+    .use(morgan(`dev`))
+    .use(bodyParser.json())
 /*app.use((req: Request, res: Response, next: Function) =>{
     console.log(`URL : ${req.url}`)
     next()
@@ -38,38 +52,41 @@ app.get("/api/pokemons/:id", (request: Request, response: Response) => {
     //constante pour le message
     const message = `Un pokemon a bien été trouvé`;
     // Ajout d'un message pour informer que le pokemon a bien été trouvé
-    response.json({message,pokemon});
+    response.json({ message, pokemon });
 })
 
 //Le nouveau point de terminaison affiche la liste des pokemons
 app.get(`/api/pokemons`, (request: Request, response: Response) => {
     // Ajout d'un message pour informer que la liste a bien été récuperée
     const message = `La liste des pokemons a bien été récupérée.`;
-    response.json(success(message,pokemons));
-    
+    response.json(success(message, pokemons));
+
 })
 
 //point de terminaison pour ajouter un pokemon
 app.post(`/api/pokemons`, (request: Request, response: Response) => {
     const id = getUniqueId(pokemons);
     const pokemonCreated = {
-        ...request.body, ...{id: id, created: new Date()}}
-        pokemons.push(pokemonCreated);
-        const message = `Le pokemon ${pokemonCreated.name} a bien été créé.`;
-        response.json(success(message, pokemonCreated));
-    
+        ...request.body, ...{ id: id, created: new Date() }
+    }
+    pokemons.push(pokemonCreated);
+    const message = `Le pokemon ${pokemonCreated.name} a bien été créé.`;
+    response.json(success(message, pokemonCreated));
+
 })
 
 //Ajout d'un nouveau point de terminaison pour modifier un pokemon
 app.put(`/api/pokemons/:id`, (request: Request, response: Response) => {
     const id = parseInt(request.params.id);
     const pokemonUpdated = {
-        ...request.body, id: id}
-        pokemons = pokemons.map(pokemon =>{
-            return pokemon.id === id ? pokemonUpdated : pokemon}
-        )
-        const message = `Le pokemon ${pokemonUpdated.name} a bien été mis à jour.`;
-        response.json(success(message, pokemonUpdated));
+        ...request.body, id: id
+    }
+    pokemons = pokemons.map(pokemon => {
+        return pokemon.id === id ? pokemonUpdated : pokemon
+    }
+    )
+    const message = `Le pokemon ${pokemonUpdated.name} a bien été mis à jour.`;
+    response.json(success(message, pokemonUpdated));
 })
 
 //Ajout d'un nouveau point de terminaison pour supprimer un pokemon
@@ -87,6 +104,7 @@ app.delete(`/api/pokemons/:id`, (request: Request, response: Response) => {
     }
 });
 
+
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`))
 
-
+// port pour la base de données : mongodb://localhost:27017

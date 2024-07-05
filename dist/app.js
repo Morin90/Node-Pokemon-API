@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -10,11 +19,25 @@ const mock_pokemon_1 = require("./mock-pokemon");
 const morgan_1 = __importDefault(require("morgan"));
 const serve_favicon_1 = __importDefault(require("serve-favicon"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const mongoose_1 = __importDefault(require("mongoose"));
 // Récuperer uniquement la fonction success du module Helper.js
 let pokemons = [...mock_pokemon_1.pokemons];
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/pokemons";
+// Connect to MongoDB
+const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield mongoose_1.default.connect(MONGODB_URI);
+        console.log('MongoDB connected successfully');
+    }
+    catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1);
+    }
+});
+exports.default = connectDB;
 //Ajout du MiddleWare, pour pouvoir tracer les requêtes qui sont faites par le client
 app
     .use((0, serve_favicon_1.default)(`${__dirname}/public/favicon.ico`))
@@ -80,3 +103,4 @@ app.delete(`/api/pokemons/:id`, (request, response) => {
     }
 });
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));
+// port pour la base de données : mongodb://localhost:27017
