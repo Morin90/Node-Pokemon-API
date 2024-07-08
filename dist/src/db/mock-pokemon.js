@@ -1,30 +1,14 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = __importDefault(require("dotenv"));
-const config_1 = __importDefault(require("./src/db/config"));
-const pokemons_1 = __importDefault(require("./src/models/pokemons"));
-dotenv_1.default.config();
-const pokemons = [
-    // Ajoutez vos données Pokémon ici sous forme d'objets
+exports.pokemons = void 0;
+exports.pokemons = [
     {
         id: 1,
-        name: 'Bulbizarre',
-        hp: 45,
-        cp: 49,
-        picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
-        types: ['Plante', 'Poison'],
+        name: "Bulbizarre",
+        hp: 25,
+        cp: 5,
+        picture: "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
+        types: ["Plante", "Poison"],
         created: new Date()
     },
     {
@@ -127,17 +111,3 @@ const pokemons = [
         created: new Date()
     }
 ];
-const importData = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, config_1.default)();
-        yield pokemons_1.default.deleteMany(); // Optionnel : Efface les anciens documents
-        yield pokemons_1.default.insertMany(pokemons);
-        console.log('Données Pokémon importées avec succès');
-        process.exit();
-    }
-    catch (error) {
-        console.error('Erreur lors de l\'importation des données Pokémon:', error);
-        process.exit(1);
-    }
-});
-importData();

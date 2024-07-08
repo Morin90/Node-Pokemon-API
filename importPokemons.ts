@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import connectDB from './app';
+import connectDB from './src/db/config';
 import Pokemon from './src/models/pokemons';
 
 dotenv.config();
