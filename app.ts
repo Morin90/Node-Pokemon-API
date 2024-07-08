@@ -5,7 +5,7 @@ import favicon from "serve-favicon";
 import bodyParser from "body-parser";
 import connectDB from "./src/db/config";
 import findAllPokemons from "./src/routes/findAllPokemons";
-// Récuperer uniquement la fonction success du module Helper.js
+import findOnePokemons from "./src/routes/findOnePokemons";
 
 
 dotenv.config();
@@ -25,8 +25,8 @@ app
     next()
 });*/
 app.use(findAllPokemons);
-
+app.use(findOnePokemons);
 
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`))
 
-// port pour la base de données : mongodb://localhost:27017
+

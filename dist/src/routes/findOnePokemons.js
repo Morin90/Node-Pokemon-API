@@ -12,18 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/pokemons";
-// Connect to MongoDB
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+const express_1 = require("express");
+const pokemons_1 = __importDefault(require("../models/pokemons"));
+const router = (0, express_1.Router)();
+router.get('/api/pokemons/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(MONGODB_URI);
-        console.log('MongoDB connected successfully');
+        const pokemonId = req.params.id;
+        const pokemon = yield pokemons_1.default.findOne({ id: pokemonId }); // Rechercher un Pokémon par son identifiant
+        if (!pokemon) {
+            return res.status(404).json({
+                message: `Le Pokémon avec l'identifiant ${pokemonId} n'a pas été trouvé.`
+            });
+        }
+        res.json({
+            message: 'Le Pokémon a bien été récupéré.',
+            data: pokemon
+        });
     }
     catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        process.exit(1);
+        res.status(500).json({
+            message: 'Une erreur est survenue lors de la récupération du Pokémon.',
+            error: error.message
+        });
     }
-});
-exports.default = connectDB;
-// port pour la base de données : mongodb://localhost:27017
+}));
+exports.default = router;

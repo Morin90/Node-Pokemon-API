@@ -10,7 +10,7 @@ const serve_favicon_1 = __importDefault(require("serve-favicon"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const config_1 = __importDefault(require("./src/db/config"));
 const findAllPokemons_1 = __importDefault(require("./src/routes/findAllPokemons"));
-// Récuperer uniquement la fonction success du module Helper.js
+const findOnePokemons_1 = __importDefault(require("./src/routes/findOnePokemons"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -25,5 +25,5 @@ app
     next()
 });*/
 app.use(findAllPokemons_1.default);
+app.use(findOnePokemons_1.default);
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));
-// port pour la base de données : mongodb://localhost:27017

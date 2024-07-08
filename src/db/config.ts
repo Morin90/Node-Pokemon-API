@@ -12,3 +12,5 @@ const connectDB = async () => {
     }
 };
 export default connectDB;
+
+// port pour la base de données : mongodb://localhost:27017
