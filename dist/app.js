@@ -12,6 +12,8 @@ const config_1 = __importDefault(require("./src/db/config"));
 const findAllPokemons_1 = __importDefault(require("./src/routes/findAllPokemons"));
 const findOnePokemons_1 = __importDefault(require("./src/routes/findOnePokemons"));
 const createPokemons_1 = __importDefault(require("./src/routes/createPokemons"));
+const deleteOnePokemon_1 = __importDefault(require("./src/routes/deleteOnePokemon"));
+const updatePokemon_1 = __importDefault(require("./src/routes/updatePokemon"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -28,4 +30,6 @@ app
 app.use(findAllPokemons_1.default);
 app.use(findOnePokemons_1.default);
 app.use(createPokemons_1.default);
+app.use(deleteOnePokemon_1.default);
+app.use(updatePokemon_1.default);
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));
