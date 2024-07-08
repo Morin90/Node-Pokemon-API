@@ -7,7 +7,7 @@ router.post('/api/pokemons', async (req: Request, res: Response) => {
     try {
         const {  name, hp, cp, picture, types } = req.body;
 
-        // Validation de base (vous pouvez ajouter plus de validations si nécessaire)
+        // Validation de base des champs
         if ( !name || !hp || !cp || !picture || !types) {
             return res.status(400).json({
                 message: 'Tous les champs sont requis :  name, hp, cp, picture, types.'

@@ -32,6 +32,11 @@ app.use(createPokemon);
 app.use(deleteOnePokemon);
 app.use(updatePokemon);
 
+app.use((req: Request, res: Response) => {
+    const message = 'La ressource demandée n\'existe pas. Vous pouvez essayer une autre URL.';
+    return res.status(404).json({ message });
+});
+
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`))
 
 

@@ -32,4 +32,8 @@ app.use(findOnePokemons_1.default);
 app.use(createPokemons_1.default);
 app.use(deleteOnePokemon_1.default);
 app.use(updatePokemon_1.default);
+app.use((req, res) => {
+    const message = 'La ressource demandée n\'existe pas. Vous pouvez essayer une autre URL.';
+    return res.status(404).json({ message });
+});
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`));
