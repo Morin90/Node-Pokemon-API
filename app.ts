@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import connectDB from "./src/db/config";
 import findAllPokemons from "./src/routes/findAllPokemons";
 import findOnePokemons from "./src/routes/findOnePokemons";
-
+import createPokemon from "./src/routes/createPokemons";
 
 dotenv.config();
 const app = express();
@@ -26,6 +26,9 @@ app
 });*/
 app.use(findAllPokemons);
 app.use(findOnePokemons);
+app.use(createPokemon);
+
+
 
 app.listen(PORT, () => console.log(`Notre application Node est démarré sur le port : http://localhost:${PORT}`))
 

@@ -6,7 +6,9 @@ const validTypes = ['Plante', 'Poison', 'Feu', 'Eau', 'Insecte', 'Vol', 'Normal'
 const PokemonSchema = new mongoose_1.Schema({
     id: {
         type: Number,
-        required: true
+        required: false,
+        unique: true,
+        autoIncrement: true
     },
     name: {
         type: String,

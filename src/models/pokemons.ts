@@ -16,7 +16,9 @@ interface PokemonDocument extends Document {
 const PokemonSchema = new Schema<PokemonDocument>({
     id: {
         type: Number,
-        required: true
+        required: false,
+        unique: true,
+        autoIncrement: true
     },
     name: {
         type: String,
