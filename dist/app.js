@@ -23,10 +23,6 @@ app
     .use((0, serve_favicon_1.default)(`${__dirname}/public/favicon.ico`))
     .use((0, morgan_1.default)(`dev`))
     .use(body_parser_1.default.json());
-/*app.use((req: Request, res: Response, next: Function) =>{
-    console.log(`URL : ${req.url}`)
-    next()
-});*/
 app.use(findAllPokemons_1.default);
 app.use(findOnePokemons_1.default);
 app.use(createPokemons_1.default);

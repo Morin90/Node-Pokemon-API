@@ -22,10 +22,7 @@ app
     .use(favicon(`${__dirname}/public/favicon.ico`))
     .use(morgan(`dev`))
     .use(bodyParser.json())
-/*app.use((req: Request, res: Response, next: Function) =>{
-    console.log(`URL : ${req.url}`)
-    next()
-});*/
+
 app.use(findAllPokemons);
 app.use(findOnePokemons);
 app.use(createPokemon);
