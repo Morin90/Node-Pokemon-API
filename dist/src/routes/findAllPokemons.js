@@ -21,6 +21,11 @@ router.get('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, func
         const limit = parseInt(req.query.limit) || 6; // limiter la recherche a 6 pokemons maximum
         if (req.query.name) {
             const name = req.query.name;
+            if (name && name.length < 2) {
+                return res.status(400).json({
+                    message: 'La recherche doit contenir au moins 2 caractères.'
+                });
+            }
             const totalPokemons = yield pokemons_1.default.countDocuments({ name: new RegExp(name, 'i') });
             const pokemons = yield pokemons_1.default.find({ name: new RegExp(name, 'i') }).sort({ name: 1 }).limit(limit); // Utilisation de regex pour recherche insensible à la casse
             return res.json({
