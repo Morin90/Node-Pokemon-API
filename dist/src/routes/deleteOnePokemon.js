@@ -16,6 +16,32 @@ const express_1 = require("express");
 const pokemons_1 = __importDefault(require("../models/pokemons"));
 const router = (0, express_1.Router)();
 router.delete('/api/pokemons/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    /* #swagger.tags = ['pokemons']
+    #swagger.security = [{
+        basicAuth: []
+    }]
+#swagger.summary = 'Supprimer un pokemons par Id'
+#swagger.responses[200] = {
+        description: 'Pokémon supprimé avec succès'
+        properties: {
+            message: { type: 'Le pokemons a été supprimé avec succès.' }
+        }
+    }
+#swagger.responses[404] = {
+        description: 'Pokémon non trouvé'
+        properties: {
+            message: { type: 'Le pokemons avec cet ID n\'existe pas.' }
+        }
+    }
+#swagger.responses[500] = {
+        description: 'Erreur serveur interne'
+        properties: {
+            message: { type: 'Une erreur est survenue lors de la suppression du pokemons.' },
+            error: { type: 'Description détaillée de l\'erreur.' }
+        }
+    }
+
+ */
     try {
         const id = parseInt(req.params.id);
         // Vérifiez si le Pokémon existe

@@ -5,6 +5,8 @@ const router = Router();
 
 router.post('/api/pokemons', async (req: Request, res: Response) => {
     try {
+       
+        
         const {  name, hp, cp, picture, types } = req.body;
 
         // Validation de base des champs
@@ -35,16 +37,40 @@ const newId = count + 1;
             picture,
             types
         });
-
+ /* #swagger.tags = ['pokemons']
+#swagger.summary = 'Ajouter un nouveau pokémon'
+#swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Le nouveau pokémon',
+    required: true,
+    schema: {
+        $ref: '#/definitions/Pokemon'
+    }
+}
+#swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
+ */
         // Sauvegarder le Pokémon dans la base de données
         await newPokemon.save();
 
         res.status(201).json({
+            /* #swagger.responses[201] = {
+                description: 'Le pokémón a été ajouté avec succès.',
+                schema: {
+                    $ref: '#/definitions/Pokemon'
+                }
+            }
+            
+            */
             message: 'Le Pokémon a été créé avec succès.',
             data: newPokemon
         });
     } catch (error: any) {
+          /* #swagger.responses[500] = {
+                description: 'Erreur serveur interne'
+            }
+             */
         res.status(500).json({
+          
             message: 'Une erreur est survenue lors de la création du Pokémon.',
             error: error.message
         });

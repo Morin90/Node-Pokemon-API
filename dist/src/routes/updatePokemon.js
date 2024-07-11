@@ -16,6 +16,50 @@ const express_1 = require("express");
 const pokemons_1 = __importDefault(require("../models/pokemons"));
 const router = (0, express_1.Router)();
 router.put('/api/pokemons/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    /* #swagger.tags = ['pokemons']
+    #swagger.security = [{
+        basicAuth: []
+    }]
+#swagger.summary = 'Mettre à jour un pokemons'
+#swagger.description = 'Mettre à jour un pokemons de la base de données'
+#swagger.parameters['id'] = {
+    in: 'path',
+    description: 'L\'id du pokemons',
+    required: true,
+    type: 'integer'
+}
+#swagger.responses[200] = {
+    description: 'OK',
+    schema: {
+        type: 'object',
+        properties: {
+            message: { type: 'Le pokemons a été mis à jour avec succès.' },
+            data: { $ref: '#/definitions/Pokemon' }
+        }
+    }
+}
+#swagger.responses[404] = {
+    description: 'Not Found',
+    schema: {
+        type: 'object',
+        properties: {
+            message: { type: 'Le pokemons avec cet ID n\'existe pas.' }
+        }
+    }
+
+}
+#swagger.responses[500] = {
+    description: 'Internal Server Error',
+    schema: {
+        type: 'object',
+        properties: {
+            message: { type: 'Une erreur est survenue lors de la mise à jour du pokemons.' },
+            error: { type: 'Description détaillée de l\'erreur.' }
+        }
+    }
+}
+
+ */
     try {
         const id = parseInt(req.params.id);
         const updateData = req.body;

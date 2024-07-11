@@ -1,0 +1,14 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Pokemon API",
+        "version": "1.0.0",
+        "description": "API pour gérer les Pokémons"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Serveur de développement"
+        }
+    ]
+}

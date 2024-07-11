@@ -16,6 +16,31 @@ const pokemons_1 = __importDefault(require("../models/pokemons"));
 const express_1 = require("express");
 const router = (0, express_1.Router)();
 router.get('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    /* #swagger.tags = ['pokemons']
+#swagger.description = 'Retourne tous les pokemons de la base de données'
+#swagger.summary = 'Recherche de tous les pokemons'
+#swagger.responses[200] = {
+    description: 'OK',
+    schema: {
+        type: 'array',
+        items: { $ref: '#/definitions/Pokemon' }
+    }
+}
+
+#swagger.responses[400] = {
+    description: 'Bad Request'
+}
+#swagger.responses[500] = {
+    description: 'Internal Server Error',
+    schema: {
+        type: 'object',
+        properties: {
+            message: { type: 'Une erreur est survenue lors de la récupération des Pokémon.'}
+        }
+    }
+}
+        
+        */
     try {
         // Recherche des pokemons par nom
         const limit = parseInt(req.query.limit) || 6; // limiter la recherche a 6 pokemons maximum

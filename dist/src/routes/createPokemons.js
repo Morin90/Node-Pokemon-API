@@ -43,14 +43,38 @@ router.post('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, fun
             picture,
             types
         });
+        /* #swagger.tags = ['pokemons']
+       #swagger.summary = 'Ajouter un nouveau pokémon'
+       #swagger.parameters['body'] = {
+           in: 'body',
+           description: 'Le nouveau pokémon',
+           required: true,
+           schema: {
+               $ref: '#/definitions/Pokemon'
+           }
+       }
+       #swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
+        */
         // Sauvegarder le Pokémon dans la base de données
         yield newPokemon.save();
         res.status(201).json({
+            /* #swagger.responses[201] = {
+                description: 'Le pokémón a été ajouté avec succès.',
+                schema: {
+                    $ref: '#/definitions/Pokemon'
+                }
+            }
+            
+            */
             message: 'Le Pokémon a été créé avec succès.',
             data: newPokemon
         });
     }
     catch (error) {
+        /* #swagger.responses[500] = {
+              description: 'Erreur serveur interne'
+          }
+           */
         res.status(500).json({
             message: 'Une erreur est survenue lors de la création du Pokémon.',
             error: error.message

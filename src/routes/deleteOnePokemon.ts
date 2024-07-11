@@ -4,6 +4,23 @@ import Pokemon from '../models/pokemons';
 const router = Router();
 
 router.delete('/api/pokemons/:id', async (req: Request, res: Response) => {
+    /* #swagger.tags = ['pokemons']
+    #swagger.security = [{
+        basicAuth: []
+    }]
+#swagger.summary = 'Supprimer un pokemons par Id'
+#swagger.responses[200] = {
+        description: 'Pokémon supprimé avec succès'
+    }
+#swagger.responses[404] = {
+        description: 'Pokémon non trouvé'
+        
+    }
+#swagger.responses[500] = {
+        description: 'Erreur serveur interne'
+    }
+
+ */
     try {
         const id = parseInt(req.params.id);
 

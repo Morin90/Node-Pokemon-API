@@ -5,7 +5,33 @@ import { Request, Response, Router } from "express"
 
 const router = Router();
 
+
 router.get('/api/pokemons', async (req: Request, res: Response) => {
+    /* #swagger.tags = ['pokemons']
+#swagger.description = 'Retourne tous les pokemons de la base de données'
+#swagger.summary = 'Recherche de tous les pokemons'
+#swagger.responses[200] = {
+    description: 'OK',
+    schema: {
+        type: 'array',
+        items: { $ref: '#/definitions/Pokemon' }
+    }
+}
+
+#swagger.responses[400] = {
+    description: 'Bad Request'
+}
+#swagger.responses[500] = {
+    description: 'Internal Server Error',
+    schema: {
+        type: 'object',
+        properties: {
+            message: { type: 'Une erreur est survenue lors de la récupération des Pokémon.'}
+        }
+    }
+}
+        
+        */
     try {
         // Recherche des pokemons par nom
         const limit = parseInt(req.query.limit as string) || 6; // limiter la recherche a 6 pokemons maximum
