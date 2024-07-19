@@ -32,11 +32,14 @@ router.post('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, fun
             });
         }
         // Obtention de la longueur actuelle de la collection
-        const count = yield pokemons_1.default.countDocuments({});
-        const newId = count + 1;
-        // Création du Pokémon
+        /**function generateUniqueId() {
+            let idUnique = Date.now() +  Math.floor(Math.random() * 33);
+            if(idUnique === idUnique) {
+                return idUnique +1;
+            }
+            return idUnique;
+        }**/
         const newPokemon = new pokemons_1.default({
-            id: newId,
             name,
             hp,
             cp,
@@ -44,17 +47,17 @@ router.post('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, fun
             types
         });
         /* #swagger.tags = ['pokemons']
-       #swagger.summary = 'Ajouter un nouveau pokémon'
-       #swagger.parameters['body'] = {
-           in: 'body',
-           description: 'Le nouveau pokémon',
-           required: true,
-           schema: {
-               $ref: '#/definitions/Pokemon'
-           }
-       }
-       #swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
-        */
+        #swagger.summary = 'Ajouter un nouveau pokémon'
+        #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Le nouveau pokémon',
+            required: true,
+            schema: {
+                $ref: '#/definitions/Pokemon'
+            }
+        }
+        #swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
+         */
         // Sauvegarder le Pokémon dans la base de données
         yield newPokemon.save();
         res.status(201).json({
@@ -72,8 +75,8 @@ router.post('/api/pokemons', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     catch (error) {
         /* #swagger.responses[500] = {
-              description: 'Erreur serveur interne'
-          }
+                description: 'Erreur serveur interne'
+            }
            */
         res.status(500).json({
             message: 'Une erreur est survenue lors de la création du Pokémon.',

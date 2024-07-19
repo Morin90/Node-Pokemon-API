@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
+const uuid_1 = require("uuid");
 const validTypes = ['Plante', 'Poison', 'Feu', 'Eau', 'Insecte', 'Vol', 'Normal', 'Electrik', 'Fée'];
 // Define the Pokemon schema
 const PokemonSchema = new mongoose_1.Schema({
     id: {
-        type: Number,
-        required: false,
+        type: String,
+        default: uuid_1.v4,
         unique: true,
-        autoIncrement: true
     },
     name: {
         type: String,

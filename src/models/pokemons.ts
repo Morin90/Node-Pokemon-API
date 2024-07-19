@@ -1,10 +1,10 @@
 import { Schema, model, Document } from 'mongoose';
-
+import { v4 as uuidv4 } from 'uuid';
 const validTypes = ['Plante', 'Poison', 'Feu', 'Eau', 'Insecte', 'Vol', 'Normal', 'Electrik', 'Fée'];
 
 // Interface for Pokemon document
 interface PokemonDocument extends Document {
-    id: number;
+    id: string;
     name: string;
     hp: number;
     cp: number;
@@ -15,10 +15,9 @@ interface PokemonDocument extends Document {
 // Define the Pokemon schema
 const PokemonSchema = new Schema<PokemonDocument>({
     id: {
-        type: Number,
-        required: false,
+        type: String,
+        default: uuidv4,
         unique: true,
-        autoIncrement: true
     },
     name: {
         type: String,

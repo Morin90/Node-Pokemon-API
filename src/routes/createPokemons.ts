@@ -1,16 +1,17 @@
 import { Router, Request, Response } from 'express';
 import Pokemon from '../models/pokemons';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const router = Router();
 
 router.post('/api/pokemons', async (req: Request, res: Response) => {
     try {
-       
-        
-        const {  name, hp, cp, picture, types } = req.body;
+
+        const { name, hp, cp, picture, types } = req.body;
 
         // Validation de base des champs
-        if ( !name || !hp || !cp || !picture || !types) {
+        if (!name || !hp || !cp || !picture || !types) {
             return res.status(400).json({
                 message: 'Tous les champs sont requis :  name, hp, cp, picture, types.'
             });
@@ -23,32 +24,35 @@ router.post('/api/pokemons', async (req: Request, res: Response) => {
                 message: 'Le nom est déjà pris.'
             });
         }
+        // Obtention de la longueur actuelle de la collection
+        /**function generateUniqueId() {
+            let idUnique = Date.now() +  Math.floor(Math.random() * 33);
+            if(idUnique === idUnique) {
+                return idUnique +1;
+            }
+            return idUnique;
+        }**/
+        
 
-// Obtention de la longueur actuelle de la collection
-const count = await Pokemon.countDocuments({});
-const newId = count + 1;
-
-        // Création du Pokémon
         const newPokemon = new Pokemon({
-            id: newId,
             name,
             hp,
             cp,
             picture,
             types
         });
- /* #swagger.tags = ['pokemons']
-#swagger.summary = 'Ajouter un nouveau pokémon'
-#swagger.parameters['body'] = {
-    in: 'body',
-    description: 'Le nouveau pokémon',
-    required: true,
-    schema: {
-        $ref: '#/definitions/Pokemon'
-    }
-}
-#swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
- */
+        /* #swagger.tags = ['pokemons']
+        #swagger.summary = 'Ajouter un nouveau pokémon'
+        #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Le nouveau pokémon',
+            required: true,
+            schema: {
+                $ref: '#/definitions/Pokemon'
+            }
+        }
+        #swagger.description = 'Ajoute un nouveau pokémôn au jeu de base de données.'
+         */
         // Sauvegarder le Pokémon dans la base de données
         await newPokemon.save();
 
@@ -65,12 +69,12 @@ const newId = count + 1;
             data: newPokemon
         });
     } catch (error: any) {
-          /* #swagger.responses[500] = {
+        /* #swagger.responses[500] = {
                 description: 'Erreur serveur interne'
             }
-             */
+           */
         res.status(500).json({
-          
+
             message: 'Une erreur est survenue lors de la création du Pokémon.',
             error: error.message
         });

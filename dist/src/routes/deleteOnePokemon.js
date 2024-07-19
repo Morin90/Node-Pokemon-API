@@ -23,45 +23,47 @@ router.delete('/api/pokemons/:id', (req, res) => __awaiter(void 0, void 0, void 
 #swagger.summary = 'Supprimer un pokemons par Id'
 #swagger.responses[200] = {
         description: 'Pokémon supprimé avec succès'
-        properties: {
-            message: { type: 'Le pokemons a été supprimé avec succès.' }
-        }
     }
 #swagger.responses[404] = {
         description: 'Pokémon non trouvé'
-        properties: {
-            message: { type: 'Le pokemons avec cet ID n\'existe pas.' }
-        }
+        
     }
 #swagger.responses[500] = {
         description: 'Erreur serveur interne'
-        properties: {
-            message: { type: 'Une erreur est survenue lors de la suppression du pokemons.' },
-            error: { type: 'Description détaillée de l\'erreur.' }
-        }
     }
 
  */
-    try {
-        const id = parseInt(req.params.id);
+    /*try {
+        const pokemonId = parseInt(req.params.id);
+
         // Vérifiez si le Pokémon existe
-        const pokemon = yield pokemons_1.default.findOne({ id });
+        const pokemon = await Pokemon.findOne({ id : pokemonId});
         if (!pokemon) {
             return res.status(404).json({
                 message: 'Le Pokémon avec cet ID n\'existe pas.'
             });
         }
+
         // Supprimez le Pokémon
-        yield pokemons_1.default.deleteOne({ id });
+        await Pokemon.deleteOne({ id: pokemonId });
+
         res.status(200).json({
             message: 'Le Pokémon a été supprimé avec succès.'
         });
-    }
-    catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             message: 'Une erreur est survenue lors de la suppression du Pokémon.',
             error: error.message
         });
+    }*/
+    try {
+        const deletedPokemon = yield pokemons_1.default.findOneAndDelete({ id: req.params.id });
+        if (!deletedPokemon)
+            return res.status(404).json({ message: "Pokemon non trouvé" });
+        res.status(200).json({ message: "Pokemon supprimé" });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }));
 exports.default = router;

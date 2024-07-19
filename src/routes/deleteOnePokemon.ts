@@ -21,11 +21,11 @@ router.delete('/api/pokemons/:id', async (req: Request, res: Response) => {
     }
 
  */
-    try {
-        const id = parseInt(req.params.id);
+    /*try {
+        const pokemonId = parseInt(req.params.id);
 
         // Vérifiez si le Pokémon existe
-        const pokemon = await Pokemon.findOne({ id });
+        const pokemon = await Pokemon.findOne({ id : pokemonId});
         if (!pokemon) {
             return res.status(404).json({
                 message: 'Le Pokémon avec cet ID n\'existe pas.'
@@ -33,7 +33,7 @@ router.delete('/api/pokemons/:id', async (req: Request, res: Response) => {
         }
 
         // Supprimez le Pokémon
-        await Pokemon.deleteOne({ id });
+        await Pokemon.deleteOne({ id: pokemonId });
 
         res.status(200).json({
             message: 'Le Pokémon a été supprimé avec succès.'
@@ -43,7 +43,15 @@ router.delete('/api/pokemons/:id', async (req: Request, res: Response) => {
             message: 'Une erreur est survenue lors de la suppression du Pokémon.',
             error: error.message
         });
-    }
+    }*/
+
+        try {
+            const deletedPokemon = await Pokemon.findOneAndDelete({ id: req.params.id });
+            if (!deletedPokemon) return res.status(404).json({ message: "Pokemon non trouvé" });
+            res.status(200).json({ message: "Pokemon supprimé" });
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
 });
 
 export default router;

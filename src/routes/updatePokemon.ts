@@ -48,12 +48,12 @@ router.put('/api/pokemons/:id', async (req: Request, res: Response) => {
 }
 
  */
-    try {
-        const id = parseInt(req.params.id);
+    /*try {
+        const pokemonId = parseInt(req.params.id);
         const updateData = req.body;
 
         // Vérifiez si le Pokémon existe
-        const pokemon = await Pokemon.findOne({ id });
+        const pokemon = await Pokemon.findOne({ id:pokemonId });
         if (!pokemon) {
             return res.status(404).json({
                 message: 'Le Pokémon avec cet ID n\'existe pas.'
@@ -61,7 +61,7 @@ router.put('/api/pokemons/:id', async (req: Request, res: Response) => {
         }
 
         // Mettre à jour le Pokémon
-        const updatedPokemon = await Pokemon.findOneAndUpdate({ id }, updateData, { new: true });
+        const updatedPokemon = await Pokemon.findOneAndUpdate({ id : pokemonId }, updateData, { new: true });
 
         res.status(200).json({
             message: 'Le Pokémon a été mis à jour avec succès.',
@@ -72,7 +72,16 @@ router.put('/api/pokemons/:id', async (req: Request, res: Response) => {
             message: 'Une erreur est survenue lors de la mise à jour du Pokémon.',
             error: error.message
         });
-    }
+    }*/
+        try {
+            const updatedPokemon = await Pokemon.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+            if (!updatedPokemon) return res.status(404).json({ message: "Pokemon non trouvé" });
+            res.status(200).json(updatedPokemon);
+        } catch (error:any) {
+            res.status(400).json({ message:'Une erreur est survenue lors de la mise à jour du Pokémon.', 
+                error:  error.message });
+        }
+
 });
 
 export default router;
