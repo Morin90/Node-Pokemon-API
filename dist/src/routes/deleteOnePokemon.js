@@ -56,11 +56,12 @@ router.delete('/api/pokemons/:id', (req, res) => __awaiter(void 0, void 0, void 
             error: error.message
         });
     }*/
+    // Ajoutez une temporalité aléatoire entre 1 et 5 secondes
     try {
         const deletedPokemon = yield pokemons_1.default.findOneAndDelete({ id: req.params.id });
         if (!deletedPokemon)
             return res.status(404).json({ message: "Pokemon non trouvé" });
-        res.status(200).json({ message: "Pokemon supprimé" });
+        res.status(200).json({ message: "Pokemon supprimé " });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

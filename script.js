@@ -93,3 +93,4 @@ console.log(putRes.body);
     }
 console.log(`Pokemon ID: ${pokemonId}`);
 }
+//Pour lancer JMeter jmeter.bat depuis le dossier bin de jmeter
